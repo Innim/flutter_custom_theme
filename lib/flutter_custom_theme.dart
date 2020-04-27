@@ -1,4 +1,4 @@
-library custom_theme;
+library flutter_custom_theme;
 
 export 'src/custom_theme.dart';
 export 'src/custom_themes.dart';
