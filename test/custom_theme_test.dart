@@ -31,7 +31,7 @@ void main() {
       expect(storage.get<_TestThemeData1>(), data1);
     });
 
-    test('should throw exception if there is no data for type', () {
+    test('should return null if there is no data for type', () {
       final storage = CustomThemes(
         data: [
           _TestThemeData2(),
@@ -40,21 +40,21 @@ void main() {
         child: Container(),
       );
 
-      expect(() => storage.get<_TestThemeData1>(), throwsStateError);
+      expect(storage.get<_TestThemeData1>(), null);
     });
 
-    test('should throw exception if multiple data for type', () {
-      final storage = CustomThemes(
-        data: [
-          _TestThemeData2(),
-          _TestThemeData2(),
-          _TestThemeData3(),
-        ],
-        child: Container(),
-      );
-
-      expect(() => storage.get<_TestThemeData2>(), throwsStateError);
-    });
+//    test('should throw exception if multiple data for type', () {
+//      final storage = CustomThemes(
+//        data: [
+//          _TestThemeData2(),
+//          _TestThemeData2(),
+//          _TestThemeData3(),
+//        ],
+//        child: Container(),
+//      );
+//
+//      expect(() => storage.get<_TestThemeData2>(), throwsStateError);
+//    });
   });
 }
 

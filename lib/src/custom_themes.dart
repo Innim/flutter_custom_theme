@@ -25,8 +25,10 @@ class CustomThemes extends InheritedWidget {
         super(key: key, child: child);
 
   /// Obtains the theme data of given type.
+  ///
+  /// If there is no theme data for type, then `null` will be returned.
   T get<T extends CustomThemeData>() =>
-      data.singleWhere((e) => e.runtimeType == T);
+      data.firstWhereOrNull((e) => e.runtimeType == T);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {

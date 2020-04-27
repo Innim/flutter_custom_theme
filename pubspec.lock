@@ -80,7 +80,7 @@ packages:
       name: list_ext
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   matcher:
     dependency: transitive
     description:
