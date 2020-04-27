@@ -1,6 +1,6 @@
 # custom_theme
 
-[![pub package](https://img.shields.io/pub/v/custom_theme)](https://pub.dartlang.org/packages/custom_theme)
+[![pub package](https://img.shields.io/pub/v/flutter_custom_theme)](https://pub.dartlang.org/packages/flutter_custom_theme)
 
 Flutter package for managing custom themes.
 Make your own custom theme for custom components. Easily share it between projects and customize.
