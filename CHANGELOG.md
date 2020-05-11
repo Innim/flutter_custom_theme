@@ -1,6 +1,7 @@
 ## Next release
 
 * Add an example.
+* Update README.
 
 ## [0.1.1] - 2020-04-30
 
