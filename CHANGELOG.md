@@ -1,5 +1,7 @@
 ## Next release
 
+## [0.1.1+1] - 2020-05-11
+
 * Add an example.
 * Update README.
 
