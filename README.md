@@ -11,10 +11,10 @@ Make your own custom theme for custom components. Easily share it between projec
 
 To use this plugin:
 
- * add `custom_theme` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/);
- * [define custom theme](#define-custom-theme);
- * [use this theme in your widget](#use-theme-in-widget);
- * [create custom theme instance in the application](#customize-for-application).
+ 1. add `custom_theme` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/);
+ 2. [define custom theme](#define-custom-theme);
+ 3. [use this theme in your widget](#use-theme-in-widget);
+ 4. [create custom theme instance in the application](#customize-for-application).
 
 ### Define custom theme
 
@@ -134,6 +134,6 @@ some business logic, but only difference from project to project - it's how it l
 This is a really big problem. You must write a lot of useless and repeating code to do this.
 All benefits of sharing feature are fall away.
 
-With `[flutter_custom_theme](https://pub.dev/packages/flutter_custom_theme)` you can easily
+With [flutter_custom_theme](https://pub.dev/packages/flutter_custom_theme) you can easily
 define your own theme and share widgets or feature between the project.
-Now you just wrap all in `CustomThemes` with required themes instances and it's done.
+Now you just wrap all with `CustomThemes` with required themes instances and it's done.
