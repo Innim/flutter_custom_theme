@@ -12,9 +12,9 @@ Make your own custom theme for custom components. Easily share it between projec
 To use this plugin:
 
  * add `custom_theme` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/);
- * [define custom theme](#define_custom_theme);
- * [use this theme in your widget](#use_theme_in_widget);
- * [create custom theme instance in the application](#customize_in_application).
+ * [define custom theme](#define-custom-theme);
+ * [use this theme in your widget](#use-theme-in-widget);
+ * [create custom theme instance in the application](#customize-for-application).
 
 ### Define custom theme
 
@@ -26,7 +26,7 @@ class CustomWidgetThemeData extends CustomThemeData {
 }
 ```
 
-For easy access to this theme - define static `of()` method:
+For easy access to this theme define static `of(BuildContext)` method:
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
@@ -92,14 +92,14 @@ class CustomWidget extends StatelessWidget {
 }
 ```
 
-### Customize in application
+### Customize for application
 
 To provide theme for all underlying `CustomWidget` instances wrap it with `CustomThemes`:
 ```dart
 @override
   Widget build(BuildContext context) {
     return CustomThemes(
-      data: <CustomThemeData>[
+      data: [
         // Custom theme for application
         const CustomWidgetThemeData(
           textStyle: TextStyle(
@@ -122,17 +122,18 @@ To provide theme for all underlying `CustomWidget` instances wrap it with `Custo
 
 ## When to use
 
-Use it if your share widgets or event whole features between the projects.
+Use it if your share widgets or even whole features between the projects.
 
-For example if you create widget `TextButton` and want to use it in multiple projects.
-Of cause this button should be different in different projects and Flutter theme settings
-not always (or even always not) enough for customize it. You can create different widget
-with custom appearance in each project, but it's just waste of time.
+For example: you create widget `TextButton` and want to use it in multiple projects.
+Of cause this button should look different in different projects and Flutter theme settings
+not always (or even always not) enough for customize it. As a solution you can create
+different widgets with custom appearance in each project, but it's just waste of time.
 
-Another example - you want to share whole feature. It can include several screens and
+Another example: you want to share whole feature. It can include multiple screens and
 some business logic, but only difference from project to project - it's how it look like.
-This is a really big problem - you must write a lot of useless and repeating code to do this.
+This is a really big problem. You must write a lot of useless and repeating code to do this.
 All benefits of sharing feature are fall away.
 
-With `flutter_custom_theme` you can easily define your own theme and share widgets
-between the project just creating `CustomThemes` as needed.
+With `[flutter_custom_theme](https://pub.dev/packages/flutter_custom_theme)` you can easily
+define your own theme and share widgets or feature between the project.
+Now you just wrap all in `CustomThemes` with required themes instances and it's done.
