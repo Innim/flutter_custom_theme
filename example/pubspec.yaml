@@ -1,0 +1,15 @@
+name: example
+description: Example of custom theme usage.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_custom_theme:
+    path: ../
+
+flutter:
+  uses-material-design: true

@@ -1,3 +1,7 @@
+## Next release
+
+* Add an example.
+
 ## [0.1.1] - 2020-04-30
 
 * Add complex theme data and recursive theme data search.
