@@ -11,8 +11,10 @@ class CustomThemes extends InheritedWidget with StorageByTypeMixin {
   }
 
   /// Obtains the theme data of given type from the nearest storage.
+  ///
+  /// If [CustomThemes] storage is not found than returns `null`.
   static T of<T extends CustomThemeData>(BuildContext context) {
-    return _of(context).get<T>();
+    return _of(context)?.get<T>();
   }
 
   /// List of custom themes data.

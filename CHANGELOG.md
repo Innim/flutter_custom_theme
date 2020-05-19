@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.1.1+2] - 2020-05-19
+
+* If `CustomThemes` storage is not found than `of<T>()` method returns `null`.
+
 ## [0.1.1+1] - 2020-05-11
 
 * Add an example.

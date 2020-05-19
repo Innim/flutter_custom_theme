@@ -74,6 +74,45 @@ void main() {
         expect(storage.get<_TestThemeData3>(), null);
       });
     });
+
+    group('of<T>()', () {
+      testWidgets('should return data from context',
+          (WidgetTester tester) async {
+        final data1 = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [data1],
+            child: Builder(
+              builder: (context) {
+                result = CustomThemes.of<_TestThemeData1>(context);
+                return Container();
+              },
+            ),
+          ),
+        );
+
+        expect(result, data1);
+      });
+
+      testWidgets('should return null if CustomThemes not found',
+          (WidgetTester tester) async {
+        _TestThemeData1 result;
+        int calls = 0;
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              calls++;
+              result = CustomThemes.of<_TestThemeData1>(context);
+              return Container();
+            },
+          ),
+        );
+
+        expect(calls, 1);
+        expect(result, null);
+      });
+    });
   });
 
   group('StorageByType', () {
