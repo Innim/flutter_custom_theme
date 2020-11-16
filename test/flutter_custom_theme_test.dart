@@ -114,6 +114,26 @@ void main() {
         expect(result, null);
       });
 
+      testWidgets('should return default if CustomThemes not found',
+          (WidgetTester tester) async {
+        final defaultData = _TestThemeData1();
+        _TestThemeData1 result;
+        int calls = 0;
+        await tester.pumpWidget(
+          Builder(
+            builder: (context) {
+              calls++;
+              result = CustomThemes.of<_TestThemeData1>(context,
+                  mainDefault: defaultData);
+              return Container();
+            },
+          ),
+        );
+
+        expect(calls, 1);
+        expect(result, defaultData);
+      });
+
       testWidgets('should return data for light theme by default',
           (WidgetTester tester) async {
         final light = _TestThemeData1();
@@ -200,6 +220,56 @@ void main() {
         );
 
         expect(result, dark);
+      });
+
+      testWidgets('should return default main data for dark theme',
+          (WidgetTester tester) async {
+        final mainDefault = _TestThemeData1();
+        final darkDefault = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [],
+            child: MaterialApp(
+              theme: ThemeData(),
+              darkTheme: ThemeData.dark(),
+              themeMode: ThemeMode.dark,
+              builder: (context, child) {
+                result = CustomThemes.of<_TestThemeData1>(context,
+                    mainDefault: mainDefault, darkDefault: darkDefault);
+                return Container(child: child);
+              },
+              home: Container(),
+            ),
+          ),
+        );
+
+        expect(result, darkDefault);
+      });
+
+      testWidgets(
+          'should return default main data for dark theme if no dark default',
+          (WidgetTester tester) async {
+        final mainDefault = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [],
+            child: MaterialApp(
+              theme: ThemeData(),
+              darkTheme: ThemeData.dark(),
+              themeMode: ThemeMode.dark,
+              builder: (context, child) {
+                result = CustomThemes.of<_TestThemeData1>(context,
+                    mainDefault: mainDefault);
+                return Container(child: child);
+              },
+              home: Container(),
+            ),
+          ),
+        );
+
+        expect(result, mainDefault);
       });
     });
   });

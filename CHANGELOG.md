@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.1.3] - 2020-11-16
+
+* `CustomThemes.of()` supports the default values.
+
 ## [0.1.2] - 2020-11-16
 
 * Dark mode support.

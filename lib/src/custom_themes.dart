@@ -14,9 +14,11 @@ class CustomThemes extends InheritedWidget with StorageByTypeMixin {
   /// Obtains the theme data of given type from the nearest storage.
   ///
   /// If [CustomThemes] storage is not found than returns `null`.
-  static T of<T extends CustomThemeData>(BuildContext context) {
+  static T of<T extends CustomThemeData>(BuildContext context,
+      {T mainDefault, T darkDefault}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return _of(context)?.get<T>(isDark ? _getDarkFunc<T>() : null);
+    return _of(context)?.get<T>(isDark ? _getDarkFunc<T>() : null) ??
+        (isDark && darkDefault != null ? darkDefault : mainDefault);
   }
 
   static GetFromSubStorage<T> _getDarkFunc<T>() => (storage) {
