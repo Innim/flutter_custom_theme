@@ -1,3 +1,6 @@
+/// Function to get element with type [E] from [storage].
+typedef GetFromSubStorage<E> = E Function(StorageByType storage);
+
 /// Storage for instances by type.
 abstract class StorageByType {
   /// List of types in storage.
@@ -6,7 +9,7 @@ abstract class StorageByType {
   /// Obtains the instance of given type [E].
   ///
   /// If there is no instance for type, then `null` will be returned.
-  E get<E>();
+  E get<E>([GetFromSubStorage<E> func]);
 }
 
 /// Storage for instances by type.
@@ -35,11 +38,11 @@ abstract class StorageByTypeMixin implements StorageByType {
   /// Obtains the instance of given type [E].
   ///
   /// If there is no instance for type, then `null` will be returned
-  E get<E>() {
+  E get<E>([GetFromSubStorage<E> func]) {
     var res = _map[E];
     if (res == null && _subStorage.isNotEmpty) {
       for (final storage in _subStorage) {
-        res = storage.get<E>();
+        res = func != null ? func.call(storage) : storage.get<E>();
         if (res != null) return res;
       }
     }

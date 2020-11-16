@@ -156,6 +156,33 @@ void main() {
         expect(storage.get<_TestThemeData2>(), null);
         expect(storage.get<_TestThemeData3>(), null);
       });
+
+      test('should return result of passed func', () {
+        final data1 = _TestThemeData1();
+        final data2 = _TestThemeData2();
+        final data3 = _TestThemeDataWithNested(data1, data2);
+        final storage = StorageByTypeImpl();
+        final expected2 = _TestThemeData2();
+        final expected3 = _TestThemeData3();
+
+        storage.setData([data3], recursive: true);
+
+        expect(storage.get<_TestThemeData2>((s) => expected2), expected2);
+        expect(storage.get<_TestThemeData3>((s) => expected3), expected3);
+      });
+
+      test('should not use passed func result if there is data in list', () {
+        final data1 = _TestThemeData1();
+        final data2 = _TestThemeData2();
+        final data3 = _TestThemeDataWithNested(data1, data2);
+        final storage = StorageByTypeImpl();
+        final nonExpected = _TestThemeData2();
+        final expected = _TestThemeData2();
+
+        storage.setData([expected, data3], recursive: true);
+
+        expect(storage.get<_TestThemeData2>((s) => nonExpected), expected);
+      });
     });
   });
 
