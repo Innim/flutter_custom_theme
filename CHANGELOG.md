@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.1.2] - 2020-11-16
+
+* Dark mode support.
+
 ## [0.1.1+2] - 2020-05-19
 
 * If `CustomThemes` storage is not found than `of<T>()` method returns `null`.
