@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 import 'package:flutter_custom_theme/src/storage_by_type.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -111,6 +112,94 @@ void main() {
 
         expect(calls, 1);
         expect(result, null);
+      });
+
+      testWidgets('should return data for light theme by default',
+          (WidgetTester tester) async {
+        final light = _TestThemeData1();
+        final dark = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [CustomThemeDataSet(data: light, dataDark: dark)],
+            child: MaterialApp(
+              theme: ThemeData(),
+              darkTheme: ThemeData.dark(),
+              builder: (context, child) {
+                result = CustomThemes.of<_TestThemeData1>(context);
+                return Container(child: child);
+              },
+              home: Container(),
+            ),
+          ),
+        );
+
+        expect(result, light);
+      });
+
+      testWidgets('should return data for dark theme if dark theme',
+          (WidgetTester tester) async {
+        final light = _TestThemeData1();
+        final dark = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [CustomThemeDataSet(data: light, dataDark: dark)],
+            child: MaterialApp(
+              theme: ThemeData(),
+              darkTheme: ThemeData.dark(),
+              themeMode: ThemeMode.dark,
+              builder: (context, child) {
+                result = CustomThemes.of<_TestThemeData1>(context);
+                return Container(child: child);
+              },
+              home: Container(),
+            ),
+          ),
+        );
+
+        expect(result, dark);
+      });
+
+      testWidgets('should return data for dark theme in nested data',
+          (WidgetTester tester) async {
+        final light = _TestThemeData1();
+        final dark = _TestThemeData1();
+        _TestThemeData1 result;
+        await tester.pumpWidget(
+          CustomThemes(
+            data: [
+              _TestThemeDataWithNested(
+                CustomThemeDataSet(
+                  data: _TestThemeDataWithNested(
+                    light,
+                    _TestThemeData3(),
+                  ),
+                  dataDark: _TestThemeDataWithNested(
+                    dark,
+                    _TestThemeData3(),
+                  ),
+                ),
+                CustomThemeDataSet(
+                  data: _TestThemeData2(),
+                  dataDark: _TestThemeData2(),
+                ),
+              )
+            ],
+            child: MaterialApp(
+              theme: ThemeData(),
+              darkTheme: ThemeData.dark(),
+              themeMode: ThemeMode.dark,
+              builder: (context, child) {
+                result = CustomThemes.of<_TestThemeData1>(context);
+                return Container(child: child);
+              },
+              home: Container(),
+            ),
+          ),
+        );
+
+        expect(result, dark);
       });
     });
   });
@@ -258,7 +347,7 @@ void main() {
       });
     });
 
-    group('types ', () {
+    group('types', () {
       test('should single type', () {
         final data = _TestThemeData1();
         final dataDark = _TestThemeData1();

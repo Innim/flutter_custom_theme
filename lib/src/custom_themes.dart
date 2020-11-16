@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_theme/src/storage_by_type.dart';
 import 'custom_theme.dart';
@@ -14,8 +15,17 @@ class CustomThemes extends InheritedWidget with StorageByTypeMixin {
   ///
   /// If [CustomThemes] storage is not found than returns `null`.
   static T of<T extends CustomThemeData>(BuildContext context) {
-    return _of(context)?.get<T>();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return _of(context)?.get<T>(isDark ? _getDarkFunc<T>() : null);
   }
+
+  static GetFromSubStorage<T> _getDarkFunc<T>() => (storage) {
+        if (storage is CustomThemeDataSet) {
+          return storage.getDark<T>(_getDarkFunc<T>());
+        }
+
+        return storage.get<T>(_getDarkFunc<T>());
+      };
 
   /// List of custom themes data.
   final List<CustomThemeData> data;
