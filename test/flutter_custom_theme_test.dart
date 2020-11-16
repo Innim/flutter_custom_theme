@@ -229,6 +229,34 @@ void main() {
         expect(dataSet.get<_TestThemeData1>((s) => expected), expected);
       });
     });
+    group('getDark<E>()', () {
+      test('should return data', () {
+        final data = _TestThemeData1();
+        final dataDark = _TestThemeData1();
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.getDark<_TestThemeData1>(), dataDark);
+      });
+
+      test('should return null if ivalid type', () {
+        final data = _TestThemeData1();
+        final dataDark = _TestThemeData1();
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.getDark<_TestThemeData2>(), null);
+      });
+
+      test('should return result of func if storage', () {
+        final data =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataDark =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+        final expected = _TestThemeData1();
+
+        expect(dataSet.getDark<_TestThemeData1>((s) => expected), expected);
+      });
+    });
 
     group('types ', () {
       test('should single type', () {

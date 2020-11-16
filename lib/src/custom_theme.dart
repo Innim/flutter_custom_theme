@@ -34,7 +34,16 @@ class CustomThemeDataSet<T extends CustomThemeData> extends CustomThemeData
         assert(dataDark != null);
 
   @override
-  E get<E>([func]) {
+  Iterable<Type> get types sync* {
+    yield T;
+  }
+
+  @override
+  E get<E>([GetFromSubStorage<E> func]) => _get<E>(data, func);
+
+  E getDark<E>([GetFromSubStorage<E> func]) => _get<E>(dataDark, func);
+
+  E _get<E>(T data, GetFromSubStorage<E> func) {
     if (E == T) {
       return data as E;
     }
@@ -44,10 +53,5 @@ class CustomThemeDataSet<T extends CustomThemeData> extends CustomThemeData
     }
 
     return null;
-  }
-
-  @override
-  Iterable<Type> get types sync* {
-    yield T;
   }
 }
