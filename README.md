@@ -97,27 +97,47 @@ class CustomWidget extends StatelessWidget {
 To provide theme for all underlying `CustomWidget` instances wrap it with `CustomThemes`:
 ```dart
 @override
-  Widget build(BuildContext context) {
-    return CustomThemes(
-      data: [
-        // Custom theme for application
-        const CustomWidgetThemeData(
-          textStyle: TextStyle(
-            fontSize: 20,
-            color: Colors.indigo,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-          backgroundColor: Colors.lightBlueAccent,
-        )
-      ],
-      child: MaterialApp(
-        title: 'Flutter Custom Theme Demo',
-        theme: ThemeData(),
-        home: MyHomePage(),
+Widget build(BuildContext context) {
+  return CustomThemes(
+    data: [
+      // Custom theme for application
+      const CustomWidgetThemeData(
+        textStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.indigo,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+        backgroundColor: Colors.lightBlueAccent,
+      )
+    ],
+    child: MaterialApp(
+      title: 'Flutter Custom Theme Demo',
+      theme: ThemeData(),
+      home: MyHomePage(),
+    ),
+  );
+}
+```
+
+### Dark theme support 
+
+You can provide different data for the light and dark mode.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return CustomThemes(
+    data: [
+      const CustomThemeDataSet(
+      data: CustomWidgetThemeData(
+        backgroundColor: Colors.lightBlueAccent,
       ),
-    );
-  }
+      darkData: CustomWidgetThemeData(
+        backgroundColor: Colors.black,
+      ),
+    ],
+    child: ...
 ```
 
 ## When to use
