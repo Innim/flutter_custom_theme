@@ -80,7 +80,7 @@ void main() {
       testWidgets('should return data from context',
           (WidgetTester tester) async {
         final data1 = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [data1],
@@ -98,7 +98,7 @@ void main() {
 
       testWidgets('should return null if CustomThemes not found',
           (WidgetTester tester) async {
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         int calls = 0;
         await tester.pumpWidget(
           Builder(
@@ -117,7 +117,7 @@ void main() {
       testWidgets('should return default if CustomThemes not found',
           (WidgetTester tester) async {
         final defaultData = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         int calls = 0;
         await tester.pumpWidget(
           Builder(
@@ -138,7 +138,7 @@ void main() {
           (WidgetTester tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [CustomThemeDataSet(data: light, dataDark: dark)],
@@ -161,7 +161,7 @@ void main() {
           (WidgetTester tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [CustomThemeDataSet(data: light, dataDark: dark)],
@@ -185,7 +185,7 @@ void main() {
           (WidgetTester tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [
@@ -226,7 +226,7 @@ void main() {
           (WidgetTester tester) async {
         final mainDefault = _TestThemeData1();
         final darkDefault = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [],
@@ -251,7 +251,7 @@ void main() {
           'should return default main data for dark theme if no dark default',
           (WidgetTester tester) async {
         final mainDefault = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [],
@@ -437,7 +437,7 @@ class _TestThemeData3 extends CustomThemeData {}
 
 class _TestThemeDataWithNested extends ComplexCustomThemeData {
   final CustomThemeData subtheme1;
-  final CustomThemeData subtheme2;
+  final CustomThemeData? subtheme2;
 
   _TestThemeDataWithNested(this.subtheme1, this.subtheme2)
       : super([subtheme1, subtheme2]);

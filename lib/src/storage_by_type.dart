@@ -1,5 +1,5 @@
 /// Function to get element with type [E] from [storage].
-typedef GetFromSubStorage<E> = E Function(StorageByType storage);
+typedef GetFromSubStorage<E> = E? Function(StorageByType storage);
 
 /// Storage for instances by type.
 abstract class StorageByType {
@@ -9,7 +9,7 @@ abstract class StorageByType {
   /// Obtains the instance of given type [E].
   ///
   /// If there is no instance for type, then `null` will be returned.
-  E get<E>([GetFromSubStorage<E> func]);
+  E? get<E>([GetFromSubStorage<E>? func]);
 }
 
 /// Storage for instances by type.
@@ -31,14 +31,13 @@ abstract class StorageByTypeMixin implements StorageByType {
   ///
   /// If [recursive] is `true` than
   void setData(Iterable data, {bool recursive = false}) {
-    assert(data != null);
     data.forEach(recursive ? _addRecursive : _addInstance);
   }
 
   /// Obtains the instance of given type [E].
   ///
   /// If there is no instance for type, then `null` will be returned
-  E get<E>([GetFromSubStorage<E> func]) {
+  E? get<E>([GetFromSubStorage<E>? func]) {
     var res = _map[E];
     if (res == null && _subStorage.isNotEmpty) {
       for (final storage in _subStorage) {
@@ -47,7 +46,7 @@ abstract class StorageByTypeMixin implements StorageByType {
       }
     }
 
-    return res as E;
+    return res as E?;
   }
 
   void _addInstance(item) {

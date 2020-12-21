@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
 import 'storage_by_type.dart';
@@ -18,7 +16,7 @@ abstract class CustomThemeData {
 /// All nested [CustomThemeData] will be available through [CustomThemes.of].
 abstract class ComplexCustomThemeData extends CustomThemeData
     with StorageByTypeMixin {
-  ComplexCustomThemeData(List<CustomThemeData> nested) {
+  ComplexCustomThemeData(List<CustomThemeData?> nested) {
     setData(nested.where((item) => item != null), recursive: true);
   }
 }
@@ -29,9 +27,7 @@ class CustomThemeDataSet<T extends CustomThemeData> extends CustomThemeData
   final T data;
   final T dataDark;
 
-  const CustomThemeDataSet({@required this.data, @required this.dataDark})
-      : assert(data != null),
-        assert(dataDark != null);
+  const CustomThemeDataSet({required this.data, required this.dataDark});
 
   @override
   Iterable<Type> get types sync* {
@@ -39,11 +35,11 @@ class CustomThemeDataSet<T extends CustomThemeData> extends CustomThemeData
   }
 
   @override
-  E get<E>([GetFromSubStorage<E> func]) => _get<E>(data, func);
+  E? get<E>([GetFromSubStorage<E>? func]) => _get<E>(data, func);
 
-  E getDark<E>([GetFromSubStorage<E> func]) => _get<E>(dataDark, func);
+  E? getDark<E>([GetFromSubStorage<E>? func]) => _get<E>(dataDark, func);
 
-  E _get<E>(T data, GetFromSubStorage<E> func) {
+  E? _get<E>(T data, GetFromSubStorage<E>? func) {
     if (E == T) {
       return data as E;
     }
