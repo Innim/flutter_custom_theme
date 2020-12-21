@@ -45,7 +45,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.value, this.onValueChanged}) : super(key: key);
+  MyHomePage({Key? key, required this.value, required this.onValueChanged})
+      : super(key: key);
 
   final bool value;
   final ValueChanged<bool> onValueChanged;
@@ -107,9 +108,9 @@ class CustomWidgetThemeData extends CustomThemeData {
   static CustomWidgetThemeData of(BuildContext context) =>
       CustomThemes.of(context) ?? _default;
 
-  final TextStyle textStyle;
-  final TextAlign textAlign;
-  final Color backgroundColor;
+  final TextStyle? textStyle;
+  final TextAlign? textAlign;
+  final Color? backgroundColor;
 
   const CustomWidgetThemeData(
       {this.textStyle, this.textAlign, this.backgroundColor});
