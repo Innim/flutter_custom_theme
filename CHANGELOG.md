@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.2.0-nullsafety.0] - 2020-12-21
+
+* Migrated to null safety.
+
 ## [0.1.3] - 2020-11-16
 
 * `CustomThemes.of()` supports the default values.
