@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.1.3+1] - 2020-12-26
+
+* Update `list_ext` dependency.
+
 ## [0.1.3] - 2020-11-16
 
 * `CustomThemes.of()` supports the default values.
