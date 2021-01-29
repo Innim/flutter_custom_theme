@@ -1,5 +1,6 @@
 ## Next release
 
+## [0.1.4] - 2021-01-29
 
 * Fixed: Failed to get theme data for light mode in nested theme data.
 * Add `innim_lint` analysis rules. Refactor project.
