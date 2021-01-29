@@ -16,12 +16,13 @@ abstract class StorageByType {
 class StorageByTypeImpl with StorageByTypeMixin {}
 
 /// Mixin with functionality of storage for instances by type.
-abstract class StorageByTypeMixin implements StorageByType {
+mixin StorageByTypeMixin implements StorageByType {
   /// Map of instances.
-  final Map<Type, dynamic> _map = {};
-  final List<StorageByType> _subStorage = [];
+  final _map = <Type, Object>{};
+  final _subStorage = <StorageByType>[];
 
   /// List of types in storage.
+  @override
   Iterable<Type> get types => _map.keys;
 
   /// Set list of instances.
@@ -38,19 +39,20 @@ abstract class StorageByTypeMixin implements StorageByType {
   /// Obtains the instance of given type [E].
   ///
   /// If there is no instance for type, then `null` will be returned
+  @override
   E get<E>([GetFromSubStorage<E> func]) {
     var res = _map[E];
     if (res == null && _subStorage.isNotEmpty) {
       for (final storage in _subStorage) {
         res = func != null ? func.call(storage) : storage.get<E>();
-        if (res != null) return res;
+        if (res != null) return res as E;
       }
     }
 
     return res as E;
   }
 
-  void _addInstance(item) {
+  void _addInstance(Object item) {
     assert(item != null);
 
     final type = item.runtimeType;
@@ -59,7 +61,7 @@ abstract class StorageByTypeMixin implements StorageByType {
     _map[type] = item;
   }
 
-  void _addRecursive(item) {
+  void _addRecursive(Object item) {
     _addInstance(item);
     if (item is StorageByType) {
       _subStorage.add(item);

@@ -1,5 +1,7 @@
 ## Next release
 
+* Add `innim_lint` analysis rules. Refactor project.
+
 ## [0.1.3+1] - 2020-12-26
 
 * Update `list_ext` dependency.

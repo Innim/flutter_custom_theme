@@ -1,5 +1,6 @@
 name: flutter_custom_theme
-description: Make your own custom theme for custom components. Easily share it between projects and customize.
+description: Make your own custom theme for custom components. Easily share it
+  between projects and customize.
 version: 0.1.3+1
 homepage: https://github.com/Innim/flutter_custom_theme
 repository: https://github.com/Innim/flutter_custom_theme
@@ -17,5 +18,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  innim_lint: ^0.1.7+1
 
-flutter:
+flutter: null

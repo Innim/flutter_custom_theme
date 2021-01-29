@@ -77,8 +77,7 @@ void main() {
     });
 
     group('of<T>()', () {
-      testWidgets('should return data from context',
-          (WidgetTester tester) async {
+      testWidgets('should return data from context', (tester) async {
         final data1 = _TestThemeData1();
         _TestThemeData1 result;
         await tester.pumpWidget(
@@ -97,9 +96,9 @@ void main() {
       });
 
       testWidgets('should return null if CustomThemes not found',
-          (WidgetTester tester) async {
+          (tester) async {
         _TestThemeData1 result;
-        int calls = 0;
+        var calls = 0;
         await tester.pumpWidget(
           Builder(
             builder: (context) {
@@ -115,10 +114,10 @@ void main() {
       });
 
       testWidgets('should return default if CustomThemes not found',
-          (WidgetTester tester) async {
+          (tester) async {
         final defaultData = _TestThemeData1();
         _TestThemeData1 result;
-        int calls = 0;
+        var calls = 0;
         await tester.pumpWidget(
           Builder(
             builder: (context) {
@@ -135,7 +134,7 @@ void main() {
       });
 
       testWidgets('should return data for light theme by default',
-          (WidgetTester tester) async {
+          (tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
         _TestThemeData1 result;
@@ -158,7 +157,7 @@ void main() {
       });
 
       testWidgets('should return data for dark theme if dark theme',
-          (WidgetTester tester) async {
+          (tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
         _TestThemeData1 result;
@@ -182,7 +181,7 @@ void main() {
       });
 
       testWidgets('should return data for dark theme in nested data',
-          (WidgetTester tester) async {
+          (tester) async {
         final light = _TestThemeData1();
         final dark = _TestThemeData1();
         _TestThemeData1 result;
@@ -223,13 +222,13 @@ void main() {
       });
 
       testWidgets('should return default main data for dark theme',
-          (WidgetTester tester) async {
+          (tester) async {
         final mainDefault = _TestThemeData1();
         final darkDefault = _TestThemeData1();
         _TestThemeData1 result;
         await tester.pumpWidget(
           CustomThemes(
-            data: [],
+            data: const [],
             child: MaterialApp(
               theme: ThemeData(),
               darkTheme: ThemeData.dark(),
@@ -249,12 +248,12 @@ void main() {
 
       testWidgets(
           'should return default main data for dark theme if no dark default',
-          (WidgetTester tester) async {
+          (tester) async {
         final mainDefault = _TestThemeData1();
         _TestThemeData1 result;
         await tester.pumpWidget(
           CustomThemes(
-            data: [],
+            data: const [],
             child: MaterialApp(
               theme: ThemeData(),
               darkTheme: ThemeData.dark(),
@@ -281,7 +280,7 @@ void main() {
         final data2 = _TestThemeData2();
         final storage = StorageByTypeImpl();
 
-        storage.setData([data1, data2]);
+        storage.setData(<Object>[data1, data2]);
 
         expect(storage.get<_TestThemeData1>(), data1);
         expect(storage.get<_TestThemeData2>(), data2);
@@ -294,7 +293,7 @@ void main() {
         final data3 = _TestThemeDataWithNested(data1, data2);
         final storage = StorageByTypeImpl();
 
-        storage.setData([data3], recursive: true);
+        storage.setData(<Object>[data3], recursive: true);
 
         expect(storage.get<_TestThemeDataWithNested>(), data3);
         expect(storage.get<_TestThemeData1>(), data1);
@@ -308,7 +307,7 @@ void main() {
         final data3 = _TestThemeDataWithNested(data1, data2);
         final storage = StorageByTypeImpl();
 
-        storage.setData([data3]);
+        storage.setData(<Object>[data3]);
 
         expect(storage.get<_TestThemeDataWithNested>(), data3);
         expect(storage.get<_TestThemeData1>(), null);
@@ -324,7 +323,7 @@ void main() {
         final expected2 = _TestThemeData2();
         final expected3 = _TestThemeData3();
 
-        storage.setData([data3], recursive: true);
+        storage.setData(<Object>[data3], recursive: true);
 
         expect(storage.get<_TestThemeData2>((s) => expected2), expected2);
         expect(storage.get<_TestThemeData3>((s) => expected3), expected3);
@@ -338,7 +337,7 @@ void main() {
         final nonExpected = _TestThemeData2();
         final expected = _TestThemeData2();
 
-        storage.setData([expected, data3], recursive: true);
+        storage.setData(<Object>[expected, data3], recursive: true);
 
         expect(storage.get<_TestThemeData2>((s) => nonExpected), expected);
       });

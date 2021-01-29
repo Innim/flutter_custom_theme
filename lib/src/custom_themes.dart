@@ -43,8 +43,10 @@ class CustomThemes extends InheritedWidget with StorageByTypeMixin {
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
-    if (oldWidget is CustomThemes)
+    if (oldWidget is CustomThemes) {
       return !oldWidget.data.isUnorderedEquivalent(data);
+    }
+
     return true;
   }
 }

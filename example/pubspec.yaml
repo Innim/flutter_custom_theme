@@ -11,5 +11,8 @@ dependencies:
   flutter_custom_theme:
     path: ../
 
+dev_dependencies:
+  innim_lint: ^0.1.7+1
+
 flutter:
   uses-material-design: true
