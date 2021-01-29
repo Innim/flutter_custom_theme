@@ -48,8 +48,13 @@ class CustomThemeDataSet<T extends CustomThemeData> extends CustomThemeData
       return data as E;
     }
 
-    if (func != null && data is StorageByType) {
-      return func.call(data as StorageByType);
+    if (data is StorageByType) {
+      final storage = data as StorageByType;
+      if (func != null) {
+        return func.call(storage);
+      } else {
+        return storage.get<E>();
+      }
     }
 
     return null;

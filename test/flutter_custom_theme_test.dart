@@ -216,6 +216,48 @@ void main() {
           expect(result, dark);
         });
 
+        [true, false].forEach((isDark) {
+          final light = _TestThemeData1();
+          final dark = _TestThemeData1();
+          final expected = isDark ? dark : light;
+          final label = isDark ? 'dark' : 'light';
+
+          testWidgets('should return data for $label theme in nested data',
+              (tester) async {
+            _TestThemeData1 result;
+            await tester.pumpWidget(
+              CustomThemes(
+                data: [
+                  _TestThemeDataWithNested(
+                    CustomThemeDataSet(
+                      data: _TestThemeDataWithNested(
+                        light,
+                        _TestThemeData3(),
+                      ),
+                      dataDark: _TestThemeDataWithNested(
+                        dark,
+                        _TestThemeData3(),
+                      ),
+                    ),
+                    CustomThemeDataSet(
+                      data: _TestThemeData2(),
+                      dataDark: _TestThemeData2(),
+                    ),
+                  )
+                ],
+                child: _app(
+                  isDark: isDark,
+                  act: (context) {
+                    result = CustomThemes.of<_TestThemeData1>(context);
+                  },
+                ),
+              ),
+            );
+
+            expect(result, expected);
+          });
+        });
+
         testWidgets('should return data for dark theme in nested data',
             (tester) async {
           final light = _TestThemeData1();
@@ -351,7 +393,7 @@ void main() {
         expect(dataSet.get<_TestThemeData1>(), data);
       });
 
-      test('should return null if ivalid type', () {
+      test('should return null if invalid type', () {
         final data = _TestThemeData1();
         final dataDark = _TestThemeData1();
         final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
@@ -369,7 +411,18 @@ void main() {
 
         expect(dataSet.get<_TestThemeData1>((s) => expected), expected);
       });
+
+      test('should return storage.get() result if no func provided', () {
+        final expected = _TestThemeData1();
+        final data = _TestThemeDataWithNested(expected, _TestThemeData2());
+        final dataDark =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.get<_TestThemeData1>(), expected);
+      });
     });
+
     group('getDark<E>()', () {
       test('should return data', () {
         final data = _TestThemeData1();
@@ -396,6 +449,16 @@ void main() {
         final expected = _TestThemeData1();
 
         expect(dataSet.getDark<_TestThemeData1>((s) => expected), expected);
+      });
+
+      test('should return storage.get() result if no func provided', () {
+        final expected = _TestThemeData1();
+        final data =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataDark = _TestThemeDataWithNested(expected, _TestThemeData2());
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.getDark<_TestThemeData1>(), expected);
       });
     });
 
