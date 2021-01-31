@@ -303,7 +303,7 @@ void main() {
       test('should return instance or null', () {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data1, data2]);
 
@@ -316,7 +316,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data3], recursive: true);
 
@@ -330,7 +330,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data3]);
 
@@ -344,7 +344,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
         final expected2 = _TestThemeData2();
         final expected3 = _TestThemeData3();
 
@@ -358,7 +358,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
         final nonExpected = _TestThemeData2();
         final expected = _TestThemeData2();
 
@@ -485,7 +485,7 @@ class _TestThemeDataWithNested extends ComplexCustomThemeData {
   final CustomThemeData? subtheme2;
 
   _TestThemeDataWithNested(this.subtheme1, this.subtheme2)
-      : super([subtheme1, subtheme2]);
+      : super.by([subtheme1, subtheme2]);
 }
 
 MaterialApp _app(

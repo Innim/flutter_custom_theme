@@ -5,7 +5,8 @@ import 'custom_theme.dart';
 import 'package:list_ext/list_ext.dart';
 
 /// Storage for custom themes data.
-class CustomThemes extends InheritedWidget with StorageByTypeMixin {
+class CustomThemes extends InheritedWidget
+    with StorageByTypeMixin<CustomThemeData> {
   /// Obtains the nearest CustomThemes.
   static CustomThemes? _of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<CustomThemes>();

@@ -15,9 +15,16 @@ abstract class CustomThemeData {
 ///
 /// All nested [CustomThemeData] will be available through [CustomThemes.of].
 abstract class ComplexCustomThemeData extends CustomThemeData
-    with StorageByTypeMixin {
-  ComplexCustomThemeData(List<CustomThemeData?> nested) {
-    setData(nested.where((item) => item != null), recursive: true);
+    with StorageByTypeMixin<CustomThemeData> {
+  ComplexCustomThemeData(Iterable<CustomThemeData> nested) {
+    setData(nested, recursive: true);
+  }
+
+  ComplexCustomThemeData.by(Iterable<CustomThemeData?> nested) {
+    setData(
+      nested.where((item) => item != null).map<CustomThemeData>((e) => e!),
+      recursive: true,
+    );
   }
 }
 

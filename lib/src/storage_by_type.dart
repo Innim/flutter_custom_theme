@@ -13,12 +13,12 @@ abstract class StorageByType {
 }
 
 /// Storage for instances by type.
-class StorageByTypeImpl with StorageByTypeMixin {}
+class StorageByTypeImpl<T> with StorageByTypeMixin<T> {}
 
 /// Mixin with functionality of storage for instances by type.
-mixin StorageByTypeMixin implements StorageByType {
+mixin StorageByTypeMixin<T> implements StorageByType {
   /// Map of instances.
-  final _map = <Type, Object>{};
+  final _map = <Type, T>{};
   final _subStorage = <StorageByType>[];
 
   /// List of types in storage.
@@ -31,7 +31,7 @@ mixin StorageByTypeMixin implements StorageByType {
   /// Also list should not contain null.
   ///
   /// If [recursive] is `true` than
-  void setData(Iterable data, {bool recursive = false}) {
+  void setData(Iterable<T> data, {bool recursive = false}) {
     data.forEach(recursive ? _addRecursive : _addInstance);
   }
 
@@ -40,25 +40,25 @@ mixin StorageByTypeMixin implements StorageByType {
   /// If there is no instance for type, then `null` will be returned
   @override
   E? get<E>([GetFromSubStorage<E>? func]) {
-    var res = _map[E];
+    Object? res = _map[E];
     if (res == null && _subStorage.isNotEmpty) {
       for (final storage in _subStorage) {
         res = func != null ? func.call(storage) : storage.get<E>();
-        if (res != null) return res as E;
+        if (res != null) return res as E?;
       }
     }
 
     return res as E?;
   }
 
-  void _addInstance(Object item) {
+  void _addInstance(T item) {
     final type = item.runtimeType;
     assert(_map.containsKey(type) == false);
 
     _map[type] = item;
   }
 
-  void _addRecursive(Object item) {
+  void _addRecursive(T item) {
     _addInstance(item);
     if (item is StorageByType) {
       _subStorage.add(item);
