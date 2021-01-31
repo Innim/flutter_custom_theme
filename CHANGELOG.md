@@ -1,5 +1,11 @@
 ## Next release
 
+## [0.2.0-nullsafety.1] - 2021-01-31
+
+* Fixed: Failed to get theme data for light mode in nested theme data.
+* Add `innim_lint` analysis rules. Refactor project.
+* Update `list_ext` dependency.
+
 ## [0.2.0-nullsafety.0] - 2020-12-21
 
 * Migrated to null safety.

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 import 'package:flutter_custom_theme/src/storage_by_type.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CustomThemes', () {
@@ -77,8 +78,7 @@ void main() {
     });
 
     group('of<T>()', () {
-      testWidgets('should return data from context',
-          (WidgetTester tester) async {
+      testWidgets('should return data from context', (tester) async {
         final data1 = _TestThemeData1();
         _TestThemeData1? result;
         await tester.pumpWidget(
@@ -97,9 +97,9 @@ void main() {
       });
 
       testWidgets('should return null if CustomThemes not found',
-          (WidgetTester tester) async {
+          (tester) async {
         _TestThemeData1? result;
-        int calls = 0;
+        var calls = 0;
         await tester.pumpWidget(
           Builder(
             builder: (context) {
@@ -114,162 +114,186 @@ void main() {
         expect(result, null);
       });
 
-      testWidgets('should return default if CustomThemes not found',
-          (WidgetTester tester) async {
-        final defaultData = _TestThemeData1();
-        _TestThemeData1? result;
-        int calls = 0;
-        await tester.pumpWidget(
-          Builder(
-            builder: (context) {
-              calls++;
-              result = CustomThemes.of<_TestThemeData1>(context,
-                  mainDefault: defaultData);
-              return Container();
-            },
-          ),
-        );
-
-        expect(calls, 1);
-        expect(result, defaultData);
-      });
-
-      testWidgets('should return data for light theme by default',
-          (WidgetTester tester) async {
-        final light = _TestThemeData1();
-        final dark = _TestThemeData1();
-        _TestThemeData1? result;
-        await tester.pumpWidget(
-          CustomThemes(
-            data: [CustomThemeDataSet(data: light, dataDark: dark)],
-            child: MaterialApp(
-              theme: ThemeData(),
-              darkTheme: ThemeData.dark(),
-              builder: (context, child) {
-                result = CustomThemes.of<_TestThemeData1>(context);
-                return Container(child: child);
-              },
-              home: Container(),
-            ),
-          ),
-        );
-
-        expect(result, light);
-      });
-
-      testWidgets('should return data for dark theme if dark theme',
-          (WidgetTester tester) async {
-        final light = _TestThemeData1();
-        final dark = _TestThemeData1();
-        _TestThemeData1? result;
-        await tester.pumpWidget(
-          CustomThemes(
-            data: [CustomThemeDataSet(data: light, dataDark: dark)],
-            child: MaterialApp(
-              theme: ThemeData(),
-              darkTheme: ThemeData.dark(),
-              themeMode: ThemeMode.dark,
-              builder: (context, child) {
-                result = CustomThemes.of<_TestThemeData1>(context);
-                return Container(child: child);
-              },
-              home: Container(),
-            ),
-          ),
-        );
-
-        expect(result, dark);
-      });
-
-      testWidgets('should return data for dark theme in nested data',
-          (WidgetTester tester) async {
-        final light = _TestThemeData1();
-        final dark = _TestThemeData1();
-        _TestThemeData1? result;
-        await tester.pumpWidget(
-          CustomThemes(
-            data: [
-              _TestThemeDataWithNested(
-                CustomThemeDataSet(
-                  data: _TestThemeDataWithNested(
-                    light,
-                    _TestThemeData3(),
-                  ),
-                  dataDark: _TestThemeDataWithNested(
-                    dark,
-                    _TestThemeData3(),
-                  ),
-                ),
-                CustomThemeDataSet(
-                  data: _TestThemeData2(),
-                  dataDark: _TestThemeData2(),
-                ),
-              )
-            ],
-            child: MaterialApp(
-              theme: ThemeData(),
-              darkTheme: ThemeData.dark(),
-              themeMode: ThemeMode.dark,
-              builder: (context, child) {
-                result = CustomThemes.of<_TestThemeData1>(context);
-                return Container(child: child);
-              },
-              home: Container(),
-            ),
-          ),
-        );
-
-        expect(result, dark);
-      });
-
-      testWidgets('should return default main data for dark theme',
-          (WidgetTester tester) async {
-        final mainDefault = _TestThemeData1();
-        final darkDefault = _TestThemeData1();
-        _TestThemeData1? result;
-        await tester.pumpWidget(
-          CustomThemes(
-            data: [],
-            child: MaterialApp(
-              theme: ThemeData(),
-              darkTheme: ThemeData.dark(),
-              themeMode: ThemeMode.dark,
-              builder: (context, child) {
+      group('should return default', () {
+        testWidgets('if CustomThemes not found', (tester) async {
+          final defaultData = _TestThemeData1();
+          _TestThemeData1? result;
+          var calls = 0;
+          await tester.pumpWidget(
+            Builder(
+              builder: (context) {
+                calls++;
                 result = CustomThemes.of<_TestThemeData1>(context,
-                    mainDefault: mainDefault, darkDefault: darkDefault);
-                return Container(child: child);
+                    mainDefault: defaultData);
+                return Container();
               },
-              home: Container(),
             ),
-          ),
-        );
+          );
 
-        expect(result, darkDefault);
+          expect(calls, 1);
+          expect(result, defaultData);
+        });
+
+        testWidgets('dark data for dark theme', (tester) async {
+          final mainDefault = _TestThemeData1();
+          final darkDefault = _TestThemeData1();
+          _TestThemeData1? result;
+          await tester.pumpWidget(
+            CustomThemes(
+              data: const [],
+              child: _app(
+                isDark: true,
+                act: (context) {
+                  result = CustomThemes.of<_TestThemeData1>(context,
+                      mainDefault: mainDefault, darkDefault: darkDefault);
+                },
+              ),
+            ),
+          );
+
+          expect(result, darkDefault);
+        });
+
+        testWidgets('main data for dark theme if no dark default',
+            (tester) async {
+          final mainDefault = _TestThemeData1();
+          _TestThemeData1? result;
+          await tester.pumpWidget(
+            CustomThemes(
+              data: const [],
+              child: _app(
+                isDark: true,
+                act: (context) {
+                  result = CustomThemes.of<_TestThemeData1>(context,
+                      mainDefault: mainDefault);
+                },
+              ),
+            ),
+          );
+
+          expect(result, mainDefault);
+        });
       });
 
-      testWidgets(
-          'should return default main data for dark theme if no dark default',
-          (WidgetTester tester) async {
-        final mainDefault = _TestThemeData1();
-        _TestThemeData1? result;
-        await tester.pumpWidget(
-          CustomThemes(
-            data: [],
-            child: MaterialApp(
-              theme: ThemeData(),
-              darkTheme: ThemeData.dark(),
-              themeMode: ThemeMode.dark,
-              builder: (context, child) {
-                result = CustomThemes.of<_TestThemeData1>(context,
-                    mainDefault: mainDefault);
-                return Container(child: child);
-              },
-              home: Container(),
+      group('with CustomThemeDataSet', () {
+        testWidgets('should return data for light theme by default',
+            (tester) async {
+          final light = _TestThemeData1();
+          final dark = _TestThemeData1();
+          _TestThemeData1? result;
+          await tester.pumpWidget(
+            CustomThemes(
+              data: [CustomThemeDataSet(data: light, dataDark: dark)],
+              child: _app(
+                isDark: false,
+                act: (context) {
+                  result = CustomThemes.of<_TestThemeData1>(context);
+                },
+              ),
             ),
-          ),
-        );
+          );
 
-        expect(result, mainDefault);
+          expect(result, light);
+        });
+
+        testWidgets('should return data for dark theme if dark theme',
+            (tester) async {
+          final light = _TestThemeData1();
+          final dark = _TestThemeData1();
+          _TestThemeData1? result;
+          await tester.pumpWidget(
+            CustomThemes(
+              data: [CustomThemeDataSet(data: light, dataDark: dark)],
+              child: _app(
+                isDark: true,
+                act: (context) {
+                  result = CustomThemes.of<_TestThemeData1>(context);
+                },
+              ),
+            ),
+          );
+
+          expect(result, dark);
+        });
+
+        [true, false].forEach((isDark) {
+          final light = _TestThemeData1();
+          final dark = _TestThemeData1();
+          final expected = isDark ? dark : light;
+          final label = isDark ? 'dark' : 'light';
+
+          testWidgets('should return data for $label theme in nested data',
+              (tester) async {
+            _TestThemeData1? result;
+            await tester.pumpWidget(
+              CustomThemes(
+                data: [
+                  _TestThemeDataWithNested(
+                    CustomThemeDataSet(
+                      data: _TestThemeDataWithNested(
+                        light,
+                        _TestThemeData3(),
+                      ),
+                      dataDark: _TestThemeDataWithNested(
+                        dark,
+                        _TestThemeData3(),
+                      ),
+                    ),
+                    CustomThemeDataSet(
+                      data: _TestThemeData2(),
+                      dataDark: _TestThemeData2(),
+                    ),
+                  )
+                ],
+                child: _app(
+                  isDark: isDark,
+                  act: (context) {
+                    result = CustomThemes.of<_TestThemeData1>(context);
+                  },
+                ),
+              ),
+            );
+
+            expect(result, expected);
+          });
+        });
+
+        testWidgets('should return data for dark theme in nested data',
+            (tester) async {
+          final light = _TestThemeData1();
+          final dark = _TestThemeData1();
+          _TestThemeData1? result;
+          await tester.pumpWidget(
+            CustomThemes(
+              data: [
+                _TestThemeDataWithNested(
+                  CustomThemeDataSet(
+                    data: _TestThemeDataWithNested(
+                      light,
+                      _TestThemeData3(),
+                    ),
+                    dataDark: _TestThemeDataWithNested(
+                      dark,
+                      _TestThemeData3(),
+                    ),
+                  ),
+                  CustomThemeDataSet(
+                    data: _TestThemeData2(),
+                    dataDark: _TestThemeData2(),
+                  ),
+                )
+              ],
+              child: _app(
+                isDark: true,
+                act: (context) {
+                  result = CustomThemes.of<_TestThemeData1>(context);
+                },
+              ),
+            ),
+          );
+
+          expect(result, dark);
+        });
       });
     });
   });
@@ -281,7 +305,7 @@ void main() {
         final data2 = _TestThemeData2();
         final storage = StorageByTypeImpl();
 
-        storage.setData([data1, data2]);
+        storage.setData(<Object>[data1, data2]);
 
         expect(storage.get<_TestThemeData1>(), data1);
         expect(storage.get<_TestThemeData2>(), data2);
@@ -294,7 +318,7 @@ void main() {
         final data3 = _TestThemeDataWithNested(data1, data2);
         final storage = StorageByTypeImpl();
 
-        storage.setData([data3], recursive: true);
+        storage.setData(<Object>[data3], recursive: true);
 
         expect(storage.get<_TestThemeDataWithNested>(), data3);
         expect(storage.get<_TestThemeData1>(), data1);
@@ -308,7 +332,7 @@ void main() {
         final data3 = _TestThemeDataWithNested(data1, data2);
         final storage = StorageByTypeImpl();
 
-        storage.setData([data3]);
+        storage.setData(<Object>[data3]);
 
         expect(storage.get<_TestThemeDataWithNested>(), data3);
         expect(storage.get<_TestThemeData1>(), null);
@@ -324,7 +348,7 @@ void main() {
         final expected2 = _TestThemeData2();
         final expected3 = _TestThemeData3();
 
-        storage.setData([data3], recursive: true);
+        storage.setData(<Object>[data3], recursive: true);
 
         expect(storage.get<_TestThemeData2>((s) => expected2), expected2);
         expect(storage.get<_TestThemeData3>((s) => expected3), expected3);
@@ -338,7 +362,7 @@ void main() {
         final nonExpected = _TestThemeData2();
         final expected = _TestThemeData2();
 
-        storage.setData([expected, data3], recursive: true);
+        storage.setData(<Object>[expected, data3], recursive: true);
 
         expect(storage.get<_TestThemeData2>((s) => nonExpected), expected);
       });
@@ -369,7 +393,7 @@ void main() {
         expect(dataSet.get<_TestThemeData1>(), data);
       });
 
-      test('should return null if ivalid type', () {
+      test('should return null if invalid type', () {
         final data = _TestThemeData1();
         final dataDark = _TestThemeData1();
         final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
@@ -387,7 +411,18 @@ void main() {
 
         expect(dataSet.get<_TestThemeData1>((s) => expected), expected);
       });
+
+      test('should return storage.get() result if no func provided', () {
+        final expected = _TestThemeData1();
+        final data = _TestThemeDataWithNested(expected, _TestThemeData2());
+        final dataDark =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.get<_TestThemeData1>(), expected);
+      });
     });
+
     group('getDark<E>()', () {
       test('should return data', () {
         final data = _TestThemeData1();
@@ -414,6 +449,16 @@ void main() {
         final expected = _TestThemeData1();
 
         expect(dataSet.getDark<_TestThemeData1>((s) => expected), expected);
+      });
+
+      test('should return storage.get() result if no func provided', () {
+        final expected = _TestThemeData1();
+        final data =
+            _TestThemeDataWithNested(_TestThemeData1(), _TestThemeData2());
+        final dataDark = _TestThemeDataWithNested(expected, _TestThemeData2());
+        final dataSet = CustomThemeDataSet(data: data, dataDark: dataDark);
+
+        expect(dataSet.getDark<_TestThemeData1>(), expected);
       });
     });
 
@@ -442,3 +487,16 @@ class _TestThemeDataWithNested extends ComplexCustomThemeData {
   _TestThemeDataWithNested(this.subtheme1, this.subtheme2)
       : super([subtheme1, subtheme2]);
 }
+
+MaterialApp _app(
+        {required bool isDark, required Function(BuildContext context) act}) =>
+    MaterialApp(
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      builder: (context, child) {
+        act(context);
+        return Container(child: child);
+      },
+      home: Container(),
+    );

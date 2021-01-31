@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -45,7 +47,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.value, required this.onValueChanged})
+  const MyHomePage(
+      {Key? key, required this.value, required this.onValueChanged})
       : super(key: key);
 
   final bool value;
@@ -60,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Custom Theme Example'),
+        title: const Text('Custom Theme Example'),
       ),
       body: Center(
         child: Column(
@@ -73,10 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   value: widget.value,
                   onChanged: widget.onValueChanged,
                 ),
-                Text('Custom theme')
+                const Text('Custom theme')
               ],
             ),
-            CustomWidget()
+            const CustomWidget()
           ],
         ),
       ),
@@ -86,6 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 /// Custom widget supported custom themes.
 class CustomWidget extends StatelessWidget {
+  const CustomWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = CustomWidgetThemeData.of(context);
@@ -103,7 +108,7 @@ class CustomWidget extends StatelessWidget {
 
 /// Theme data for [CustomWidget].
 class CustomWidgetThemeData extends CustomThemeData {
-  static final _default = const CustomWidgetThemeData();
+  static const _default = CustomWidgetThemeData();
 
   static CustomWidgetThemeData of(BuildContext context) =>
       CustomThemes.of(context) ?? _default;

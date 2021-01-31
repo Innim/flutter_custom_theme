@@ -60,6 +60,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  innim_lint:
+    dependency: "direct dev"
+    description:
+      name: innim_lint
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.7+1"
   list_ext:
     dependency: "direct main"
     description:
@@ -75,7 +82,7 @@ packages:
     source: hosted
     version: "0.12.10-nullsafety.3"
   meta:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: meta
       url: "https://pub.dartlang.org"
@@ -88,6 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.3"
+  pedantic:
+    dependency: transitive
+    description:
+      name: pedantic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.2"
   quiver:
     dependency: transitive
     description:
