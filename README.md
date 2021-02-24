@@ -38,16 +38,20 @@ class CustomWidgetThemeData extends CustomThemeData {
 ```
 
 **Note:** if your theme is not exists in `context` than `null` will be returned.
-You may want to define `default` theme instance to avoid that:
+You may want to define `default` theme instance to avoid that
+(and don't forget about the dark theme):
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
-  static final _default = const CustomWidgetThemeData();
-
-  static CustomWidgetThemeData of(BuildContext context) =>
-      CustomThemes.of(context) ?? _default;
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+        context,
+        mainDefault: const CustomWidgetThemeData(),
+        darkDefault: const CustomWidgetThemeData.dark(),
+      );
 
   const CustomWidgetThemeData();
+
+  const CustomWidgetThemeData.dark();
 }
 ```
 
@@ -55,10 +59,11 @@ Now you can add any properties you need to customize appearance of your widget:
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
-  static final _default = const CustomWidgetThemeData();
-
-  static CustomWidgetThemeData of(BuildContext context) =>
-      CustomThemes.of(context) ?? _default;
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+        context,
+        mainDefault: const CustomWidgetThemeData(),
+        darkDefault: const CustomWidgetThemeData.dark(),
+      );
 
   final TextStyle textStyle;
   final TextAlign textAlign;
@@ -66,6 +71,9 @@ class CustomWidgetThemeData extends CustomThemeData {
 
   const CustomWidgetThemeData(
       {this.textStyle, this.textAlign, this.backgroundColor});
+
+  const CustomWidgetThemeData.dark(
+      {this.textStyle, this.textAlign, this.backgroundColor = Colors.blueGrey});
 }
 ```
 

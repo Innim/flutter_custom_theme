@@ -1,5 +1,10 @@
 ## Next release
 
+## [0.1.4+1] - 2021-02-24
+
+* Readme: update description of setting a default theme data.
+* Example: default theme for dark mode.
+
 ## [0.1.4] - 2021-01-29
 
 * Fixed: Failed to get theme data for light mode in nested theme data.

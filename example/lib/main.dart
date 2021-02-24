@@ -107,10 +107,11 @@ class CustomWidget extends StatelessWidget {
 
 /// Theme data for [CustomWidget].
 class CustomWidgetThemeData extends CustomThemeData {
-  static const _default = CustomWidgetThemeData();
-
-  static CustomWidgetThemeData of(BuildContext context) =>
-      CustomThemes.of(context) ?? _default;
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+        context,
+        mainDefault: const CustomWidgetThemeData(),
+        darkDefault: const CustomWidgetThemeData.dark(),
+      );
 
   final TextStyle textStyle;
   final TextAlign textAlign;
@@ -118,4 +119,7 @@ class CustomWidgetThemeData extends CustomThemeData {
 
   const CustomWidgetThemeData(
       {this.textStyle, this.textAlign, this.backgroundColor});
+
+  const CustomWidgetThemeData.dark(
+      {this.textStyle, this.textAlign, this.backgroundColor = Colors.blueGrey});
 }
