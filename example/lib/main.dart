@@ -112,7 +112,7 @@ class CustomWidgetThemeData extends CustomThemeData {
         context,
         mainDefault: const CustomWidgetThemeData(),
         darkDefault: const CustomWidgetThemeData.dark(),
-      );
+      )!;
 
   final TextStyle? textStyle;
   final TextAlign? textAlign;

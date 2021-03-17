@@ -7,12 +7,12 @@ repository: https://github.com/Innim/flutter_custom_theme
 issue_tracker: https://github.com/Innim/flutter_custom_theme/issues
 
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  list_ext: ^1.0.0-nullsafety.0
+  list_ext: ^1.0.0
   meta: ^1.2.3
 
 dev_dependencies:

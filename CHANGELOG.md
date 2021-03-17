@@ -3,6 +3,7 @@
 ## [0.2.0] - 2020-03-17
 
 * Migrated to null safety.
+* Flutter 2.
 
 ## [0.1.4+1] - 2021-02-24
 
