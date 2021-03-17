@@ -108,11 +108,11 @@ class CustomWidget extends StatelessWidget {
 
 /// Theme data for [CustomWidget].
 class CustomWidgetThemeData extends CustomThemeData {
-  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.safeOf(
         context,
         mainDefault: const CustomWidgetThemeData(),
         darkDefault: const CustomWidgetThemeData.dark(),
-      )!;
+      );
 
   final TextStyle? textStyle;
   final TextAlign? textAlign;

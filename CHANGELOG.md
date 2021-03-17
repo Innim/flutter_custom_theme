@@ -4,6 +4,7 @@
 
 * Migrated to null safety.
 * Flutter 2.
+* Method `CustomThemes.safeOf()` to get not-null data.
 
 ## [0.1.4+1] - 2021-02-24
 

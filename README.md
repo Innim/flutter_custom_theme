@@ -30,7 +30,7 @@ For easy access to this theme define static `of(BuildContext)` method:
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
-  static CustomWidgetThemeData of(BuildContext context) =>
+  static CustomWidgetThemeData? of(BuildContext context) =>
       CustomThemes.of(context);
 
   const CustomWidgetThemeData();
@@ -43,7 +43,7 @@ You may want to define `default` theme instance to avoid that
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
-  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.safeOf(
         context,
         mainDefault: const CustomWidgetThemeData(),
         darkDefault: const CustomWidgetThemeData.dark(),
@@ -59,7 +59,7 @@ Now you can add any properties you need to customize appearance of your widget:
 
 ```dart
 class CustomWidgetThemeData extends CustomThemeData {
-  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.of(
+  static CustomWidgetThemeData of(BuildContext context) => CustomThemes.safeOf(
         context,
         mainDefault: const CustomWidgetThemeData(),
         darkDefault: const CustomWidgetThemeData.dark(),
