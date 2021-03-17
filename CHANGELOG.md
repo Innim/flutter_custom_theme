@@ -1,5 +1,9 @@
 ## Next release
 
+## [0.2.0] - 2020-03-17
+
+* Migrated to null safety.
+
 ## [0.1.4+1] - 2021-02-24
 
 * Readme: update description of setting a default theme data.
@@ -9,9 +13,6 @@
 
 * Fixed: Failed to get theme data for light mode in nested theme data.
 * Add `innim_lint` analysis rules. Refactor project.
-
-## [0.1.3+1] - 2020-12-26
-
 * Update `list_ext` dependency.
 
 ## [0.1.3] - 2020-11-16

@@ -5,17 +5,18 @@ import 'custom_theme.dart';
 import 'package:list_ext/list_ext.dart';
 
 /// Storage for custom themes data.
-class CustomThemes extends InheritedWidget with StorageByTypeMixin {
+class CustomThemes extends InheritedWidget
+    with StorageByTypeMixin<CustomThemeData> {
   /// Obtains the nearest CustomThemes.
-  static CustomThemes _of(BuildContext context) {
+  static CustomThemes? _of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<CustomThemes>();
   }
 
   /// Obtains the theme data of given type from the nearest storage.
   ///
   /// If [CustomThemes] storage is not found than returns `null`.
-  static T of<T extends CustomThemeData>(BuildContext context,
-      {T mainDefault, T darkDefault}) {
+  static T? of<T extends CustomThemeData>(BuildContext context,
+      {T? mainDefault, T? darkDefault}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return _of(context)?.get<T>(isDark ? _getDarkFunc<T>() : null) ??
         (isDark && darkDefault != null ? darkDefault : mainDefault);
@@ -33,11 +34,10 @@ class CustomThemes extends InheritedWidget with StorageByTypeMixin {
   final List<CustomThemeData> data;
 
   CustomThemes({
-    Key key,
-    @required this.data,
-    @required Widget child,
-  })  : assert(data != null),
-        super(key: key, child: child) {
+    Key? key,
+    required this.data,
+    required Widget child,
+  }) : super(key: key, child: child) {
     setData(data, recursive: true);
   }
 

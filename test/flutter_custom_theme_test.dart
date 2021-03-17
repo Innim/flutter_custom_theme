@@ -80,7 +80,7 @@ void main() {
     group('of<T>()', () {
       testWidgets('should return data from context', (tester) async {
         final data1 = _TestThemeData1();
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         await tester.pumpWidget(
           CustomThemes(
             data: [data1],
@@ -98,7 +98,7 @@ void main() {
 
       testWidgets('should return null if CustomThemes not found',
           (tester) async {
-        _TestThemeData1 result;
+        _TestThemeData1? result;
         var calls = 0;
         await tester.pumpWidget(
           Builder(
@@ -117,7 +117,7 @@ void main() {
       group('should return default', () {
         testWidgets('if CustomThemes not found', (tester) async {
           final defaultData = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           var calls = 0;
           await tester.pumpWidget(
             Builder(
@@ -137,7 +137,7 @@ void main() {
         testWidgets('dark data for dark theme', (tester) async {
           final mainDefault = _TestThemeData1();
           final darkDefault = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           await tester.pumpWidget(
             CustomThemes(
               data: const [],
@@ -157,7 +157,7 @@ void main() {
         testWidgets('main data for dark theme if no dark default',
             (tester) async {
           final mainDefault = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           await tester.pumpWidget(
             CustomThemes(
               data: const [],
@@ -180,7 +180,7 @@ void main() {
             (tester) async {
           final light = _TestThemeData1();
           final dark = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           await tester.pumpWidget(
             CustomThemes(
               data: [CustomThemeDataSet(data: light, dataDark: dark)],
@@ -200,7 +200,7 @@ void main() {
             (tester) async {
           final light = _TestThemeData1();
           final dark = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           await tester.pumpWidget(
             CustomThemes(
               data: [CustomThemeDataSet(data: light, dataDark: dark)],
@@ -224,7 +224,7 @@ void main() {
 
           testWidgets('should return data for $label theme in nested data',
               (tester) async {
-            _TestThemeData1 result;
+            _TestThemeData1? result;
             await tester.pumpWidget(
               CustomThemes(
                 data: [
@@ -262,7 +262,7 @@ void main() {
             (tester) async {
           final light = _TestThemeData1();
           final dark = _TestThemeData1();
-          _TestThemeData1 result;
+          _TestThemeData1? result;
           await tester.pumpWidget(
             CustomThemes(
               data: [
@@ -303,7 +303,7 @@ void main() {
       test('should return instance or null', () {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data1, data2]);
 
@@ -316,7 +316,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data3], recursive: true);
 
@@ -330,7 +330,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
 
         storage.setData(<Object>[data3]);
 
@@ -344,7 +344,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
         final expected2 = _TestThemeData2();
         final expected3 = _TestThemeData3();
 
@@ -358,7 +358,7 @@ void main() {
         final data1 = _TestThemeData1();
         final data2 = _TestThemeData2();
         final data3 = _TestThemeDataWithNested(data1, data2);
-        final storage = StorageByTypeImpl();
+        final storage = StorageByTypeImpl<Object>();
         final nonExpected = _TestThemeData2();
         final expected = _TestThemeData2();
 
@@ -482,15 +482,14 @@ class _TestThemeData3 extends CustomThemeData {}
 
 class _TestThemeDataWithNested extends ComplexCustomThemeData {
   final CustomThemeData subtheme1;
-  final CustomThemeData subtheme2;
+  final CustomThemeData? subtheme2;
 
   _TestThemeDataWithNested(this.subtheme1, this.subtheme2)
-      : super([subtheme1, subtheme2]);
+      : super.by([subtheme1, subtheme2]);
 }
 
 MaterialApp _app(
-        {@required bool isDark,
-        @required Function(BuildContext context) act}) =>
+        {required bool isDark, required Function(BuildContext context) act}) =>
     MaterialApp(
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),

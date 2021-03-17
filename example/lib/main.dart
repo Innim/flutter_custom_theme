@@ -4,7 +4,7 @@ import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -47,7 +47,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.value, this.onValueChanged})
+  const MyHomePage(
+      {Key? key, required this.value, required this.onValueChanged})
       : super(key: key);
 
   final bool value;
@@ -88,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 /// Custom widget supported custom themes.
 class CustomWidget extends StatelessWidget {
-  const CustomWidget({Key key}) : super(key: key);
+  const CustomWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +114,9 @@ class CustomWidgetThemeData extends CustomThemeData {
         darkDefault: const CustomWidgetThemeData.dark(),
       );
 
-  final TextStyle textStyle;
-  final TextAlign textAlign;
-  final Color backgroundColor;
+  final TextStyle? textStyle;
+  final TextAlign? textAlign;
+  final Color? backgroundColor;
 
   const CustomWidgetThemeData(
       {this.textStyle, this.textAlign, this.backgroundColor});
