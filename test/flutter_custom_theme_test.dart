@@ -381,6 +381,20 @@ void main() {
       expect(storage.get<_TestThemeData1>(), data1);
       expect(storage.get<_TestThemeDataWithNested>(), data3);
     });
+
+    test('should work with not null values', () {
+      final data1 = _TestThemeData1();
+      final data2 = _TestThemeData2();
+      final data3 = _TestThemeDataWithNestedNotNullable(data1, data2);
+      final storage = CustomThemes(
+        data: [data3],
+        child: Container(),
+      );
+
+      expect(storage.get<_TestThemeData1>(), data1);
+      expect(storage.get<_TestThemeData2>(), data2);
+      expect(storage.get<_TestThemeDataWithNestedNotNullable>(), data3);
+    });
   });
 
   group('CustomThemeDataSet', () {
@@ -485,7 +499,15 @@ class _TestThemeDataWithNested extends ComplexCustomThemeData {
   final CustomThemeData? subtheme2;
 
   _TestThemeDataWithNested(this.subtheme1, this.subtheme2)
-      : super.by([subtheme1, subtheme2]);
+      : super([subtheme1, subtheme2]);
+}
+
+class _TestThemeDataWithNestedNotNullable extends ComplexCustomThemeData {
+  final _TestThemeData1 subtheme1;
+  final _TestThemeData2 subtheme2;
+
+  _TestThemeDataWithNestedNotNullable(this.subtheme1, this.subtheme2)
+      : super.safe([subtheme1, subtheme2]);
 }
 
 MaterialApp _app(

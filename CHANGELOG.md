@@ -1,5 +1,14 @@
 ## Next release
 
+## [0.2.1] - 2020-05-01
+
+* **BREAKING** Make default constructor of `ComplexCustomThemeData` to
+expect iterable of nullable data. It's for making easier upgrade to Flutter 2. 
+Because if you aren't migrate your project on null-safety yet,
+than upgrade will broke your code, but analysator won't warn you.
+So now the default behaviour is just like it use to be, and if you want
+pass iterables of not nullable data use named constructor: `super.safe()`.
+
 ## [0.2.0] - 2020-03-17
 
 * Migrated to null safety.
